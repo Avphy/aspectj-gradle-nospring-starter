@@ -1,0 +1,50 @@
+group 'aspectj-gradle-nospring-starter'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "gradle.plugin.aspectj:gradle-aspectj:0.1.6"
+    }
+}
+
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.5'
+  distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
+
+ext {
+    aspectjVersion = '1.8.5'
+}
+
+apply plugin: 'java'
+apply plugin: 'aspectj.gradle'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+}
+ext{
+    javaMainClass = "kanshu.aspectj.Runner"
+}
+
+task runWithJavaExec(type: JavaExec) {
+    group = "Execution"
+    description = "Run the main class with JavaExecTask"
+    classpath = sourceSets.main.runtimeClasspath
+    main = javaMainClass
+}
+
+dependencies {
+    compile "com.google.auto.service:auto-service:1.0-rc2"
+    compile group: 'org.aspectj', name: 'aspectjrt', version: '1.8.5'
+    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.5'
+}
