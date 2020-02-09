@@ -1,0 +1,1 @@
+# aspectj-gradle-nospring-starter
